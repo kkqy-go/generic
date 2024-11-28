@@ -1,3 +1,3 @@
-module github.com/kkqy/syncmap
+module github.com/kkqy-go/syncmap
 
 go 1.18

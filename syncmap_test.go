@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/kkqy/syncmap"
+	"github.com/kkqy-go/syncmap"
 )
 
 func TestSyncMap(t *testing.T) {
