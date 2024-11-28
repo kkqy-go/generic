@@ -1,4 +1,4 @@
-# syncmap
+# generic
 The generic wrap of Golang's std type.
 
 
