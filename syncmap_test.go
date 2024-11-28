@@ -1,14 +1,14 @@
-package syncmap_test
+package generic_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/kkqy-go/syncmap"
+	"github.com/kkqy-go/generic"
 )
 
 func TestSyncMap(t *testing.T) {
-	p := syncmap.SyncMap[int, int]{}
+	p := generic.SyncMap[int, int]{}
 	key := 1
 	p.Store(key, 1)
 	fmt.Println(p.Load(key))
