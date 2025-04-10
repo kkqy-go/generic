@@ -53,3 +53,9 @@ func (p *SyncMap[KeyT, ValueT]) Len() int {
 	})
 	return count
 }
+func (p *SyncMap[KeyT, ValueT]) Clear() {
+	p.syncMap.Range(func(key, value any) bool {
+		p.syncMap.Delete(key)
+		return true
+	})
+}
