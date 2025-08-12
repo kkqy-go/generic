@@ -59,3 +59,7 @@ func (p *Optional[T]) UnmarshalJSON(data []byte) error {
 	p.presented = true
 	return json.Unmarshal(data, &p.value)
 }
+
+func NewOptional[T any](value T) Optional[T] {
+	return Optional[T]{value: value, presented: true}
+}
