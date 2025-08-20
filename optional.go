@@ -12,6 +12,14 @@ func (p *Optional[T]) Value() T {
 	return p.value
 }
 
+// Ptr returns a pointer to the value if it is presented, otherwise returns nil.
+func (p *Optional[T]) Ptr() *T {
+	if p.presented {
+		return &p.value
+	}
+	return nil
+}
+
 // ValueOr returns the value if it is presented, otherwise returns the default value.
 func (p *Optional[T]) ValueOr(defaultValue T) T {
 	if p.presented {
