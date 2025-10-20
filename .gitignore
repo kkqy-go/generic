@@ -1,0 +1,23 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries, build results
+*.test
+*.out
+
+# Go coverage
+cover.out
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Dependency directories (often managed by tools)
+/vendor/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
