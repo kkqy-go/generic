@@ -1,23 +1,21 @@
 # generic
 
-A lightweight Go 1.18+ generics utility library that provides type-safe wrappers around common standard library types.
+简洁的 Go 1.18+ 泛型工具库，提供对标准库常用类型的类型安全封装。
 
-Includes:
-- Optional[T]: Optional value container with JSON marshaling/unmarshaling (null ↔ not presented).
-- AtomicValue[T]: Type-safe wrapper around sync/atomic.Value (Load/Store/Swap/CompareAndSwap).
-- SyncMap[K, V]: Type-safe wrapper over sync.Map with convenient helpers like Len and Clear.
+包含以下组件：
+- Optional[T]：可选值容器，支持 JSON 序列化/反序列化（null ↔ 未呈现）。
+- AtomicValue[T]：对 sync/atomic.Value 的类型安全封装（Load/Store/Swap/CompareAndSwap）。
+- SyncMap[K, V]：对 sync.Map 的类型安全封装，附加 Len、Clear 等便捷方法。
 
-For the Chinese version, see: README.zh-CN.md
-
-## Installation
+## 安装
 
 ```bash
 go get -u github.com/kkqy-go/generic
 ```
 
-Requirements: Go 1.18+. Note: atomic.Value Swap and CompareAndSwap are available in Go 1.19+.
+要求：Go 1.18 及以上。
 
-## Quick start
+## 快速上手
 
 ### Optional[T]
 ```go
@@ -31,29 +29,29 @@ import (
 )
 
 func main() {
-    // Construct a presented optional
+    // 直接构造已呈现的可选值
     o := generic.NewOptional(42)
     fmt.Println(o.Presented()) // true
     fmt.Println(o.Value())     // 42
 
-    // Default value
+    // 默认值
     fmt.Println(o.ValueOr(0)) // 42
 
-    // JSON: presented -> value
+    // JSON: 已呈现 -> 值
     b, _ := json.Marshal(o)
     fmt.Println(string(b)) // "42"
 
-    // JSON: null -> not presented
+    // JSON: null -> 未呈现
     var o2 generic.Optional[int]
     _ = json.Unmarshal([]byte("null"), &o2)
     fmt.Println(o2.Presented()) // false
 
-    // Pointer access
+    // 指针访问
     if p := o.Ptr(); p != nil {
         fmt.Println(*p) // 42
     }
 
-    // Clear
+    // 清空
     o.Clear()
     fmt.Println(o.Presented()) // false
 }
@@ -71,7 +69,7 @@ import (
 func main() {
     var v generic.AtomicValue[int]
 
-    // Before the first Store, Load returns the zero value
+    // 尚未 Store 前，Load 返回类型零值
     fmt.Println(v.Load()) // 0
 
     v.Store(10)
@@ -100,7 +98,7 @@ import (
 func main() {
     var m generic.SyncMap[string, int]
 
-    // Basic store and load
+    // 基本存取
     m.Store("a", 1)
     if v, ok := m.Load("a"); ok {
         fmt.Println(v) // 1
@@ -108,31 +106,31 @@ func main() {
 
     // LoadOrStore
     actual, loaded := m.LoadOrStore("b", 2)
-    fmt.Println(actual, loaded) // 2 false (first time)
+    fmt.Println(actual, loaded) // 2 false（第一次）
 
-    // Iterate
+    // 遍历
     m.Range(func(k string, v int) bool {
         fmt.Println(k, v)
         return true
     })
 
-    // Length and clear
+    // 长度与清空
     fmt.Println(m.Len()) // 2
     m.Clear()
     fmt.Println(m.Len()) // 0
 }
 ```
 
-## Package docs
+## 包文档
 - https://pkg.go.dev/github.com/kkqy-go/generic
 
-## Motivation
-- Use Go generics to make common concurrency/container types safer and easier to use.
-- Keep close to the stdlib semantics, zero dependencies, small and simple.
+## 设计动机
+- 利用 Go 泛型，让常用并发/容器类型更安全、更易用。
+- 贴近标准库语义，零依赖，小而简单。
 
-## Development
+## 开发
 ```bash
 go test ./...
 ```
 
-Contributions are welcome via Issues and PRs.
+欢迎提交 Issue 与 PR 改进本库。
